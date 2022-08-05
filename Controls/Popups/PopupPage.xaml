@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HMExtension.Xamarin.Controls.Popups.PopupPage"
+             xmlns:controls="clr-namespace:HMExtension.Xamarin.Controls"
+             xmlns:Embeded="clr-namespace:HMExtension.Xamarin.Component"             
+             BackgroundColor="Transparent"
+             Appearing="ContentPage_Appearing"
+             Disappearing="ContentPage_Disappearing">
+    <Grid BackgroundColor="{StaticResource PageTransparentColor}"
+          x:Name="MainGrid"
+          Opacity="0"
+          FlowDirection="{Binding MessageFlowDirection}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="0.75*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.25*"/>
+            <ColumnDefinition Width="3.5*"/>
+            <ColumnDefinition Width="0.25*"/>
+        </Grid.ColumnDefinitions>
+        <Frame CornerRadius="15"
+               BackgroundColor="{AppThemeBinding Dark={StaticResource MainDarkColor},
+                    Light={StaticResource MainLightColor}}"
+               BorderColor="{AppThemeBinding Dark={StaticResource LightPrimaryColor},
+                                Light={StaticResource DarkPrimaryColor}}"
+               Grid.Row="1"
+               Grid.Column="1"/>
+
+        <Grid Grid.Row="1" 
+                      Grid.Column="1"
+                      RowDefinitions="auto, auto, *, auto, auto">
+            <Label Text="{Binding PopupTitle}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Margin="5,10"
+                           Style="{StaticResource HeaderLabelStyle}"/>
+
+            <BoxView HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End"
+                             HeightRequest="0.5"
+                             BackgroundColor="{AppThemeBinding Dark={StaticResource LightPrimaryColor},
+                                Light={StaticResource DarkPrimaryColor}}"
+                     Grid.Row="1"/>
+
+            <Grid Grid.Row="2"
+                  RowDefinitions="auto, *">
+                <Grid ColumnDefinitions="auto, *">
+                    <controls:ImageTinted Source="{Embeded:EmbededResource ResourceName=Resources.Images.Message.png}"
+                                          HeightRequest="40"
+                                          Margin="10,0,10,10"
+                                          VerticalOptions="Start"
+                                          TintColor="{AppThemeBinding Dark={StaticResource LightPrimaryColor},
+                                                Light={StaticResource DarkPrimaryColor}}"/>
+
+                    <Label Text="{Binding Message}"
+                           Style="{StaticResource CaptionLabelStyle}"
+                           MaxLines="20"
+                           VerticalOptions="StartAndExpand"
+                           Margin="10,10,0,10"
+                           Grid.Column="1">
+                    </Label>
+                </Grid>
+
+                <ListView ItemsSource="{Binding Items}"
+                              SeparatorVisibility="None"
+                              SelectionMode="Single"
+                              SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                              Margin="0,15,0,10"
+                              Grid.Row="1"
+                              x:Name="listView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Title}"
+                                           TextColor="{Binding TextColor}"
+                                       Scale="{Binding Scale}"
+                                       FontFamily="samim"
+                                       FontSize="17"
+                                       HorizontalOptions="FillAndExpand"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalOptions="FillAndExpand"
+                                       VerticalTextAlignment="Center"
+                                       Margin="10"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+            <BoxView HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End"
+                             HeightRequest="0.5"
+                             BackgroundColor="{AppThemeBinding Dark={StaticResource LightPrimaryColor},
+                                Light={StaticResource DarkPrimaryColor}}"
+                             Grid.Row="3"/>
+            <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="CenterAndExpand"
+                                 Grid.Row="4"
+                                 Spacing="0">
+                <Button Text="{Binding Button1Title}"
+                        IsVisible="{Binding Button1Visibility}"
+                        Command="{Binding Button1Command}"
+                        Style="{StaticResource PopupButtonStyle}"
+                        Margin="5,0"
+                        HorizontalOptions="FillAndExpand"/>
+                <Button Text="{Binding Button2Title}"
+                        Command="{Binding Button2Command}"
+                        IsVisible="{Binding Button2Visibility}"
+                        Style="{StaticResource PopupButtonStyle}"
+                        Margin="5,0"/>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>
